@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot with Contextual Responses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e5ddd5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            border: 1px solid #ddd;
+            background-color: #ffffff;
+        }
+
+        /* Header */
+        .chat-header {
+            background-color: #075e54;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header h2 {
+            font-size: 24px;
+        }
+
+        /* Chat Window */
+        .chat-window {
+            flex-grow: 1;
+            padding: 10px;
+            background-color: #ece5dd;
+            overflow-y: auto;
+        }
+
+        /* Chat bubbles */
+        .chat-bubble {
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            max-width: 60%;
+            position: relative;
+            animation: fadeIn 0.5s;
+        }
+
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .received {
+            background-color: white;
+            align-self: flex-start;
+        }
+
+        /* Input box */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+
+        .chat-input button {
+            background-color: #075e54;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #128c7e;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+            }
+
+            .chat-header h2 {
+                font-size: 18px;
+            }
+
+            .chat-input input {
+                font-size: 14px;
+            }
+
+            .chat-bubble {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="chat-header">
+        <h2>AI Chat with Dynamic Replies</h2>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window">
+        <div class="chat-bubble received">Hello! How can I assist you today?</div>
+    </div>
+
+    <!-- Input Box -->
+    <div class="chat-input">
+        <input type="text" id="message-input" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    let pastReplies = {};
+
+    // Function to send user message to chat
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const chatWindow = document.getElementById('chat-window');
+
+        if (messageInput.value.trim() !== "") {
+            // Create a new chat bubble for the sent message
+            const newBubble = document.createElement('div');
+            newBubble.classList.add('chat-bubble', 'sent');
+            newBubble.textContent = messageInput.value;
+
+            // Add the new message to the chat window
+            chatWindow.appendChild(newBubble);
+
+            // Clear the input field
+            messageInput.value = '';
+
+            // Scroll to the bottom of the chat
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            // Simulate AI Reply
+            setTimeout(() => {
+                aiReply(newBubble.textContent);
+            }, 1000); // AI replies after 1 second
+        }
+    }
+
+    // AI Reply logic with Web Speech API
+    function aiReply(userMessage) {
+        const chatWindow = document.getElementById('chat-window');
+
+        // Predefined AI responses based on keywords in the user query
+        const aiResponses = {
+            greeting: ["I'm good, thank you! How about you?", "Doing well! What's on your mind today?", "I'm fine, thanks! Need any help today?"],
+            weather: ["I can't check the weather directly, but you can use a weather app!", "Try asking your phone's assistant for today's weather.", "I recommend using AI weather services like Google Weather."],
+            time: ["The current time is " + new Date().toLocaleTimeString(), "Check your phone for the most accurate time!", "It's " + new Date().toLocaleTimeString() + " right now!"],
+            default: ["I'm sorry, I didn't quite understand that. Can you try again?", "Could you rephrase your question?", "I'm not sure I understand. Can you ask something else?"]
+        };
+
+        // Match user message with relevant keywords
+        let reply = '';
+        if (userMessage.toLowerCase().includes("how are you")) {
+            reply = getNonRepeatingReply('greeting', aiResponses.greeting);
+        } else if (userMessage.toLowerCase().includes("weather")) {
+            reply = getNonRepeatingReply('weather', aiResponses.weather);
+        } else if (userMessage.toLowerCase().includes("time")) {
+            reply = getNonRepeatingReply('time', aiResponses.time);
+        } else {
+            reply = getNonRepeatingReply('default', aiResponses.default);
+        }
+
+        // Create a new chat bubble for the AI reply
+        const aiBubble = document.createElement('div');
+        aiBubble.classList.add('chat-bubble', 'received');
+        aiBubble.textContent = reply;
+
+        // Add the AI reply to the chat window
+        chatWindow.appendChild(aiBubble);
+
+        // Scroll to the bottom of the chat
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+
+        // Use Web Speech API to speak the AI response
+        const speech = new SpeechSynthesisUtterance(reply);
+        window.speechSynthesis.speak(speech);
+    }
+
+    // Function to get a non-repeating reply
+    function getNonRepeatingReply(category, responseArray) {
+        if (!pastReplies[category]) {
+            pastReplies[category] = [];
+        }
+
+        // Filter out past replies to avoid repetition
+        let availableResponses = responseArray.filter(reply => !pastReplies[category].includes(reply));
+
+        // If all responses have been used, reset the past replies tracker for that category
+        if (availableResponses.length === 0) {
+            pastReplies[category] = [];
+            availableResponses = responseArray;
+        }
+
+        // Pick a random reply from available responses
+        const randomReply = availableResponses[Math.floor(Math.random() * availableResponses.length)];
+
+        // Track the reply to avoid repeating it soon
+        pastReplies[category].push(randomReply);
+
+        return randomReply;
+    }
+</script>
+
+</body>
+</html>

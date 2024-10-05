@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend vs Backend Comparison</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, purple, green);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #3c3b6e;
+            font-weight: bold;
+            font-size: 2.5rem;
+            animation: fadeInDown 1.2s ease-in-out;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        .table-container {
+            background-color: pink;
+            border: 3px solid red;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1.2s ease-in-out;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+        }
+        th, td {
+            border: 2px solid red; /* White inner border */
+            padding: 12px;
+            text-align: center;
+            background-color: yellowgreen; /* Red cell background */
+        }
+        th {
+            background-color: blue;
+            color: yellow;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+        th:hover {
+            background-color: blue;
+        }
+        td {
+            color: blue;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        td:hover {
+            transform: scale(1.1);
+            background-color: #a8dadc;
+        }
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Responsive Styles */
+        @media only screen and (max-width: 768px) {
+            th, td {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Frontend vs Backend Development</h1>
+
+    <div class="table-container">
+        <table class="table table-hover table-bordered table-responsive-sm">
+            <thead>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Frontend Development</th>
+                    <th>Backend Development</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Definition</td>
+                    <td>Focuses on the client-side (what users see and interact with).</td>
+                    <td>Focuses on the server-side (manages databases, logic, and APIs).</td>
+                </tr>
+                <tr>
+                    <td>Core Technologies</td>
+                    <td>HTML, CSS, JavaScript</td>
+                    <td>Node.js, Python, PHP, Ruby, Java</td>
+                </tr>
+                <tr>
+                    <td>Frameworks/Libraries</td>
+                    <td>React, Angular, Vue.js, Bootstrap</td>
+                    <td>Express.js, Django, Flask, Laravel</td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>Builds and designs the visual interface of the application.</td>
+                    <td>Handles server-side logic, databases, and application security.</td>
+                </tr>
+                <tr>
+                    <td>Tasks</td>
+                    <td>Ensures responsive design, user experience (UX), and cross-browser compatibility.</td>
+                    <td>Handles data management, server-side logic, and API integration.</td>
+                </tr>
+                <tr>
+                    <td>Security</td>
+                    <td>Focuses on validating user inputs.</td>
+                    <td>Ensures data security and manages authentication systems.</td>
+                </tr>
+                <tr>
+                    <td>Career Roles</td>
+                    <td>UI/UX Designers, Frontend Developers, Web Designers</td>
+                    <td>Backend Developers, Database Administrators, System Architects</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
